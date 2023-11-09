@@ -5,7 +5,7 @@ function loadDoc() {
             const myObj = JSON.parse(this.responseText);
             document.getElementById("nev").value = myObj.results[0].name.title + " " + myObj.results[0].name.first + " " + myObj.results[0].name.last;
             document.getElementById("nem").value = myObj.results[0].gender;
-            document.getElementById("szuletes").value = myObj.results[0].dob.date;
+            document.getElementById("szuletes").value = Dob(myObj.results[0].dob.date);
             document.getElementById("orszag").value = myObj.results[0].location.country;
             document.getElementById("varos").value = myObj.results[0].location.city;
             document.getElementById("email").value = myObj.results[0].email;
@@ -17,4 +17,12 @@ function loadDoc() {
     };
     xhttp.open("GET", "https://randomuser.me/api/", true);
     xhttp.send();
+}
+
+function Dob(szoveg){
+    var szuletesiDatum = "";
+    for(i = 0; i < 10; i++){
+        szuletesiDatum += szoveg[i];
+    }
+    return szuletesiDatum;
 }
