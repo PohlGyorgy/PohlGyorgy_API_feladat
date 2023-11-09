@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Regisztracio</title>
+</head>
+
+<body>
+    <form action="">
+        <p>Név:<input id="nev" type="text"></p>
+        <p>Nem:<input id="nem" type="text"></p>
+        <p>Születési dátum:<input id="szuletes" type="text"></p>
+        <p>Lakhely(ország):<input id="orszag" type="text"></p>
+        <p>Lakhely(város):<input id="varos" type="text"></p>
+        <p>E-mail cím:<input id="email" type="text"></p>
+        <p>Telefonszám: <input id="telefon" type="text"></p>
+        <p>Felhasználónév: <input id="username" type="text"></p>
+        <p>Jelszó: <input id="pw" type="text"></p>
+        <img id="profilkep" src="" alt="">
+    </form>
+    <button type="button" onclick="loadDoc()">Tesztadatok használata</button>
+
+    <script>
+
+        function loadDoc() {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    const myObj = JSON.parse(this.responseText);
+                    document.getElementById("nev").value = myObj.results[0].name.title + " " + myObj.results[0].name.first + " " + myObj.results[0].name.last;
+                    document.getElementById("nem").value = myObj.results[0].gender;
+                    document.getElementById("szuletes").value = myObj.results[0].dob.date;
+                    document.getElementById("orszag").value = myObj.results[0].location.country;
+                    document.getElementById("varos").value = myObj.results[0].location.city;
+                    document.getElementById("email").value = myObj.results[0].email;
+                    document.getElementById("telefon").value = myObj.results[0].phone;
+                    document.getElementById("username").value = myObj.results[0].login.username;
+                    document.getElementById("pw").value = myObj.results[0].login.password;
+                    document.getElementById("profilkep").src = myObj.results[0].picture.thumbnail;
+                }
+            };
+            xhttp.open("GET", "https://randomuser.me/api/", true);
+            xhttp.send();
+        }
+    </script>
+</body>
+
+</html>
